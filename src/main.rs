@@ -1,8 +1,18 @@
+mod data_type;
+mod control_flow;
+mod functions;
 fn main() {
-    let a = 1;
-    println!("Hello, world! {} today's sum is {}", a, sum(1, 12));
-}
+   // Data types
+   data_type::primitives();
+   data_type::strings();
+   data_type::arrays();
+   data_type::tuples();
+   data_type::vectors();
 
-fn sum (a: i32, b: i32) -> i32 {
-    return a+b
+   // Control Flow
+   control_flow::conditionals();
+   control_flow::loops();
+
+   // Functions
+   functions::example_function();
 }
