@@ -1,6 +1,6 @@
 use std::vec;
 
-
+/// Primitives are basic types like `int`
 pub fn primitives() {
     //* Data Types
     let a = 1;
@@ -14,7 +14,16 @@ pub fn primitives() {
         
     println!("Hello, world! {x} today's sum is {a}");
     x = 12;
-    println!("New x = {x}")
+    println!("New x = {x}");
+
+    // shadowing
+    let s = 3;
+    let s = s + 2;
+    {
+        let s = s + 10;
+        println!("inscope s = {}", s);
+    }
+    println!("outscope x = {}", s);
 }
 
 pub fn strings() {
@@ -26,7 +35,7 @@ pub fn strings() {
 
     println!("{greeting}, {name}");
 
-    // This doesn't work as rust analyzes that there might be a character or migth not be like nth(1000).
+    // ! This doesn't work as rust analyzes that there might be a character or migth not be like nth(1000).
     //println!("{greeting}, {name}, 0th char is {char1}");
 
     // pattern matching can be used to resolve options
@@ -34,6 +43,11 @@ pub fn strings() {
         Some(c) => {println!("Char1 is {c}");}
         None => println!("Char1 not found")
     }
+
+    let mut str = String::from("Harshit");
+    println!("Capacity: {}, Length: {}, Pointer: {:p}", str.capacity(), str.len(), str.as_ptr());
+    str.push_str(" is learning Rust");
+    println!("Capacity: {}, Length: {}, Pointer: {:p}", str.capacity(), str.len(), str.as_ptr());
 }
 
 
@@ -69,10 +83,13 @@ pub fn tuples(){
 
     let serial_no = tup.0;
     let character = tup.1;
-    // reference moved to str in line 63
+    // ! reference moved to str at line 63
     // let string_value = tup.2;
 
-    println!("{serial_no}, {character}")
+    println!("{serial_no}, {character}");
+
+    let arr_tup: [(i32, &str, bool); 2] = [(1, "harshit", true), (2, "harshit2", true)];
+    println!("{}", arr_tup[0].1);
 }
 
 pub fn vectors() {
@@ -84,6 +101,6 @@ pub fn vectors() {
     let mut vec = vec![1, 2, 3, 4, 5, 6];
 
     println!("Old vector = {vec:?}");
-    vec.push(29); // due to heap allocation it is dynamically resizable
+    vec.push(29); // ! due to heap allocation it is dynamically resizable
     println!("New Vector = {vec:?}");
 }
