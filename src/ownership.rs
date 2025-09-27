@@ -68,9 +68,56 @@ pub fn references() {
     let s = String::from("value");
     let s1 = get_length(&s);
 
-    println!("{s1} is the size of the referenced/borrowed string")
+    println!("{s1} is the size of the referenced/borrowed string");
+
+    // slices
+    let arr = [1, 2, 3, 4, 5];
+    let slice = &arr[0..2]; //  * reference to a contiguous sequence of elements in a collection. 
+
+    println!("slice: {slice:?}")
 }
 
 fn get_length(s: &String) -> usize {
     s.len()
+}
+
+/// Slices are a reference that are attached to the value itself.
+/// They are a immutable reference to the part of collection which they are made from
+/// This helps in:
+///     1. making sure that the original value of reference does not become invalid.
+///     1. the values stays longer than the reference itself
+pub fn slice_referencing() {
+    let mut s = String::from("harshit");
+    let word = first_word(&s);
+    
+    println!("{}", word); // case 1 word last used here and is dropped 
+    s.clear(); // mutable borrow of s is allowed as no immutable borrow exists
+    // println!("{}", word); // ! case 2 word still in scope and is not dropped, immutable borrow still exists.
+
+}
+
+/// We usually take reference to the argument as the parameter in the function
+/// This is to avoid tranfering of the ownership.
+/// We also return `&str` which is the type of the string slice.
+/// about `&str`:
+///     - It's a slice pointing to that specific point of the binary
+///     - It is an immutable reference
+/// Instead of the parameter `&String` we can use a more general and flexible function definition
+/// ```rust
+/// fn first_word(s: &str) -> &str
+/// ```
+/// `first_word` also works on references to `String`s, which are equivalent
+/// to whole slices of `String`s.
+fn first_word(s: &String) -> &str {
+    let bytes = s.as_bytes();
+
+    // '&' in the pattern destructures the reference
+    // can also use destructuring below i.e. *item == b' ' OR item == &b' '
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return &s[..i];
+        }
+    }
+
+    &s[..]
 }

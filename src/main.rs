@@ -17,8 +17,9 @@ fn main() {
    // Functions
    functions::example_function();
 
-   // Ownershipb
+   // Ownership
    ownership::borrowing();
    ownership::moving();
    ownership::references();
+   ownership::slice_referencing();
 }
