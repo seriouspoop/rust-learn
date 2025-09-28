@@ -2,6 +2,8 @@ mod data_type;
 mod control_flow;
 mod functions;
 mod ownership;
+mod structs;
+
 fn main() {
    // Data types
    data_type::primitives();
@@ -22,4 +24,11 @@ fn main() {
    ownership::moving();
    ownership::references();
    ownership::slice_referencing();
+
+   // Structs
+   structs::sample_struct();
+   structs::update_syntax();
+   structs::tuple_struct();
+   structs::unit_structs();
+   structs::methods();
 }
