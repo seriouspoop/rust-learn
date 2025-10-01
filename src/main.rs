@@ -35,4 +35,5 @@ fn main() {
 
     chapter6::enums::ip_addr_example();
     chapter6::enums::option_enum();
+    chapter6::matching::enum_patterns();
 }

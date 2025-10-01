@@ -37,3 +37,30 @@ pub mod enums {
         println!("{some_number:?}, {some_char:?}, {none_number:?}");
     }
 }
+
+pub mod matching {
+
+    #[allow(dead_code)]
+    enum Currency {
+        INR,
+        USD,
+        EURO,
+        YEN,
+    }
+
+    pub fn enum_patterns() {
+        let curr = Some(Currency::INR);
+        let amount = match curr {
+            Some(Currency::INR) => {
+                println!("Indian Rupee");
+                1
+            }
+            Some(Currency::USD) => 2,
+            Some(Currency::EURO) => 3,
+            Some(Currency::YEN) => 4,
+            None => 0,
+        };
+
+        println!("amount is {amount}");
+    }
+}
