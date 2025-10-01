@@ -33,7 +33,10 @@ fn main() {
     chapter5::structs::unit_structs();
     chapter5::structs::methods();
 
+    // Enums and Pattern Matching
     chapter6::enums::ip_addr_example();
     chapter6::enums::option_enum();
     chapter6::matching::enum_patterns();
+    chapter6::matching::if_let();
+    chapter6::matching::let_else();
 }
