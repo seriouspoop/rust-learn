@@ -6,6 +6,7 @@ pub mod enums {
         IPv6(String),
     }
 
+    // Implementing methods on enum variants
     impl IpAddr {
         fn call(&self) {
             match self {
@@ -50,12 +51,7 @@ pub mod matching {
     }
 
     impl Currency {
-        /// Here `&self` indicates that this method is callable only on reference to the currency enum variants.
-        /// and the type of self is:
-        /// ```rust
-        /// self: &Currency
-        /// ```
-        /// inside the match block the pattern should match with the reference to the variant
+        /// Inside the match block the pattern should match with the reference to the variant
         /// in the form of `&Enum::Variant(x)`, if it matches reference to reference then the inner value
         /// is de-structured as an owned type. So `x` is binded to the value as owned.
         ///

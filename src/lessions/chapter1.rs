@@ -3,11 +3,12 @@ pub mod data_types {
     pub fn primitives() {
         //* Data Types
         let a = 1;
-        let mut x: i8= 10; // by default all variables in rust are immutable
+        let mut x: i8 = 10; // by default all variables in rust are immutable
         //* types :- i8..i128, f16..f128, u8..u128, char
         
         // overflows i8 limit -128..127
         // for _i in 0..1000{
+            //? Use (_) to ignore unused variable
             //     _x += 100
             // }
             
@@ -27,19 +28,23 @@ pub mod data_types {
 
     pub fn strings() {
         //* Strings
-        let name = "Harshit";
+
+        // string slice, &str is a borrowed reference to a sequence of UTF-8 bytes stored somewhere in memory.
+        let name = "Harshit"; 
+        
+        // String is a growable, heap-allocated, mutable, owned string type.
         let greeting = String::from("Good morning");
 
         let char1 = greeting.chars().nth(0);
 
         println!("{greeting}, {name}");
-
-        // ! This doesn't work as rust analyzes that there might be a character or migth not be like nth(1000).
+ 
+        // ! This doesn't work as rust analyzes that there might or might not be a character like nth(1000).
         //println!("{greeting}, {name}, 0th char is {char1}");
 
-        // pattern matching can be used to resolve options
+        // pattern matching can be used to resolve Options
         match char1 {
-            Some(c) => {println!("Char1 is {c}");}
+            Some(c) => println!("Char1 is {c}"),
             None => println!("Char1 not found")
         }
 
@@ -82,7 +87,7 @@ pub mod data_types {
 
         let serial_no = tup.0;
         let character = tup.1;
-        // ! reference moved to str at line 63
+        // ! reference moved to str at line 84
         // let string_value = tup.2;
 
         println!("{serial_no}, {character}");

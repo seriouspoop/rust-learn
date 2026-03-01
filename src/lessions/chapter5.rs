@@ -45,7 +45,7 @@ pub mod structs {
     /// add the fields that are updated and spread the old instance.
     ///
     /// IMPORTANT! -> now `user1` is no longer valid as the `String` values from `name` and `email` field
-    /// have been <i><b>moved</b></i> to `user2`
+    /// have been moved to `user2`
     ///
     /// If no heap allocated values were borrowed from `user1` then it would still be valid.
     /// Not moved values can still be used.
@@ -73,7 +73,7 @@ pub mod structs {
         let black = Color(0, 0, 0);
         let origin = Point(0, 0, 0);
 
-        // Struct type is needed to destructuref
+        // Struct type is needed to destructure
         let Color(r, g, b) = black;
         let Point(x, y, z) = origin;
 
@@ -99,6 +99,14 @@ pub mod structs {
     }
 
     /// Within an impl block, the type Self is an alias for the type that the impl block is for
+    /// `&self` is a semantic sugar for `self: &Self`
+    /// ```
+    /// fn area(&self) -> u32
+    /// ```
+    /// is same as
+    /// ```
+    /// fn area(self: &Self) -> u32
+    /// ```
     impl Rect {
         fn area(&self) -> u32 {
             self.width * self.heigth
@@ -122,7 +130,7 @@ pub mod structs {
     /// signature.
     ///
     /// For Example -
-    /// ```rust
+    /// ```
     /// impl User {
     ///     fn print_value(&mut self){}
     /// };
@@ -131,7 +139,7 @@ pub mod structs {
     /// (&mut user).print_value();
     /// ```
     ///
-    /// both of these lines are same. Rust compiler converts the first line automatically to the send.
+    /// both of these lines are same. Rust compiler converts the first line automatically to the second.
     pub fn methods() {
         let mut rect1 = Rect {
             width: 115,
