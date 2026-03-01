@@ -7,7 +7,7 @@ pub mod guessing_game {
     use rand::Rng;
 
     // Global module constants
-    const CHANCES: u8 = 5;
+    const CHANCES: u8 = 10;
 
     fn number_generator() -> u8 {
         let num: u8 = rand::thread_rng().gen_range(0..100);
@@ -29,72 +29,68 @@ pub mod guessing_game {
         io::stdout().flush().expect("failed to flush");
     }
 
-    pub fn play() {
+    fn prompt_play_again() -> bool {
         loop {
             display_banner();
-
-            // Get user input
-            let mut is_game_on = String::from("");
+            let mut input = String::new();
             io::stdin()
-                .read_line(&mut is_game_on)
-                .expect("Failed to read line");
-            let is_game_on = is_game_on.trim();
+                .read_line(&mut input)
+                .expect("failed to read input");
 
-            match is_game_on {
-                "y" | "Yes" | "YES" | "Y" | "yes" => {
-                    println!("\nWelcome to the Game!!");
-                }
-                "n" | "No" | "NO" | "N" => {
-                    println!("\nSee you again 👋");
-                    break;
-                }
+            match input.trim().to_lowercase().as_str() {
+                "y" | "yes" => return true,
+                "n" | "no" => return false,
                 _ => {
-                    println!("\nerror: invalid input, try again");
-                    let sleep_dur = time::Duration::from_secs(2);
-                    thread::sleep(sleep_dur);
+                    println!("\nerror: invalid input, should be yes or no values");
+                    thread::sleep(time::Duration::from_secs(2));
+                }
+            }
+        }
+    }
+
+    fn run_game(rand_number: u8) -> bool {
+        let mut chances_used = 0;
+        while chances_used < CHANCES {
+            println!("Chance {} of {}:", chances_used + 1, CHANCES);
+            print!("Enter your guess between 0 to 100: ");
+            io::stdout().flush().expect("failed to flush");
+
+            let mut input = String::from("");
+
+            io::stdin()
+                .read_line(&mut input)
+                .expect("error: failed to read from stdin");
+
+            let guess: u8 = match input.trim().parse() {
+                Ok(n) => {
+                    chances_used += 1;
+                    n
+                }
+                Err(_) => {
+                    println!("guess should be of type integer.");
                     continue;
                 }
-            }
+            };
 
+            if guess > rand_number {
+                println!("The number is less than {}", guess);
+            } else if guess < rand_number {
+                println!("The number is higher than {}", guess);
+            } else {
+                return true;
+            }
+        }
+        false
+    }
+
+    pub fn play() {
+        while prompt_play_again() {
             // Business Logic
             let rand_number = number_generator();
-            let mut won = false;
-
-            let mut chances_used = 0;
-            while chances_used < CHANCES {
-                println!("Chance {} of {}:", chances_used + 1, CHANCES);
-                print!("Enter your guess between 0 to 100: ");
-                io::stdout().flush().expect("failed to flush");
-
-                let mut input = String::from("");
-
-                io::stdin()
-                    .read_line(&mut input)
-                    .expect("error: failed to read from stdin");
-
-                let guess: u8 = match input.trim().parse() {
-                    Ok(n) => {
-                        chances_used += 1;
-                        n
-                    }
-                    Err(_) => {
-                        println!("guess should be of type integer.");
-                        continue;
-                    }
-                };
-
-                if guess > rand_number {
-                    println!("The number is less than {}", guess);
-                } else if guess < rand_number {
-                    println!("The number is higher than {}", guess);
-                } else {
-                    won = true;
-                    break;
-                }
-            }
+            let won = run_game(rand_number);
 
             if won {
-                println!("\nHURRAY!! You go the correct answer {}", rand_number);
+                println!("\nHURRAY!! You got the correct answer {}", rand_number);
             } else {
                 println!("\nYou lost :( Better Luck next time");
             }
